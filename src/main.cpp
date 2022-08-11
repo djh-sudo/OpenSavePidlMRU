@@ -1,7 +1,25 @@
+#include <iostream>
 #include "format.h"
-// https://0cch.com/2014/11/17/e88eb7e5be97e4bdbfe794a8e68993e5bc80e4bf9de5ad98e5afb9e8af9de6a186e6938de4bd9ce69687e4bbb6e79a84e8aeb0e5bd95/
 
+/*
+* Analysis Recent Saved File from Register
+* HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU
+*/
+using namespace std;
 
 int main() {
+	std::locale::global(std::locale(""));
+	Parser obj;
+	obj.GetMRU();
+	wcout << L"Recent saved files:" << endl;
+	unordered_map<wstring, vector<wstring>> res = obj.GetInfo();
+	for (auto& it : res) {
+		wcout << L"=>" << it.first << L":" << endl;
+		for (auto& path : it.second) {
+			wcout << L"\t" << path << endl;
+		}
+	}
+	
 	return 0;
 }
+
